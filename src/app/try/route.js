@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 
+export const maxDuration = 10; // This function can run for a maximum of 5 seconds
 export const dynamic = "force-dynamic";
 
 const localExecutablePath =
@@ -13,7 +14,15 @@ const remoteExecutablePath =
 
 const isDev = process.env.NODE_ENV === "development";
 
-export async function GET() {
+export async function GET(request) {
+  const url = new URL(request.url);
+  const urlStr = url.searchParams.get("url");
+  if (!urlStr) {
+    return NextResponse.json(
+      { error: "Missing url parameter" },
+      { status: 400 }
+    );
+  }
   let browser = null;
   try {
     const chromium = require("@sparticuz/chromium-min");
@@ -29,7 +38,7 @@ export async function GET() {
     });
 
     const page = await browser.newPage();
-    await page.goto("https://hehehai.cn", {
+    await page.goto(urlStr, {
       waitUntil: "networkidle0",
       timeout: 100000,
     });
