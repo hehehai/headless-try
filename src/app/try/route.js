@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+
 const localExecutablePath =
   process.platform === "win32"
     ? "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
