@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-export const maxDuration = 10; // This function can run for a maximum of 5 seconds
+export const maxDuration = 60; // This function can run for a maximum of 60 seconds (update by 2024-05-10)
 export const dynamic = "force-dynamic";
 
 const localExecutablePath =
