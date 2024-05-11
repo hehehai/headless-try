@@ -35,6 +35,19 @@ export default function Home() {
 
   return (
     <div className="w-screen h-screen flex flex-col items-center justify-center text-4xl text-black bg-gradient-to-tr from-gray-300 via-slate-200 to-slate-200">
+      <div className="mb-5 max-w-md px-2">
+        <h3>Try screenshot</h3>
+        <p className="text-sm mt-3">
+          Thursday, May 9th 2024 Vercel Functions for Hobby can now run up to 60
+          seconds{" "}
+          <a
+            href="https://vercel.com/changelog/vercel-functions-for-hobby-can-now-run-up-to-60-seconds"
+            className="text-blue-500 underline"
+          >
+            detail
+          </a>
+        </p>
+      </div>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col space-y-3">
           <label htmlFor="url">Site url {time ? `(${time}s)` : ""}</label>
