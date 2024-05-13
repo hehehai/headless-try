@@ -45,9 +45,7 @@
                             if (addedNode.nodeType === addedNode.ELEMENT_NODE) {
                                 const node = addedNode?.querySelector(targetSelector);
                                 if (node) {
-                                    setTimeout(() => {
-                                        node.parentElement.click();
-                                    }, 1000);
+                                    node.parentElement.click();
                                 }
                             }
                         }
@@ -60,7 +58,7 @@
                 childList: true,
                 subtree: true
             };
-            observer.observe(w.document, observerOptions);
+            observer.observe(w.document.documentElement || w.document, observerOptions);
         }
     }
     windowsPatch(window);

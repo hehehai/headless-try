@@ -1,12 +1,27 @@
+/**
+* Cloudflare Check Tools:
+   * https://nopecha.com/demo/cloudflare
+   * https://nowsecure.nl/
+   * https://2captcha.com/demo/cloudflare-turnstile
+* Browser Check Tools:
+   * https://infosimples.github.io/detect-headless/
+   * https://arh.antoinevastel.com/bots/areyouheadless
+   * https://bot.sannysoft.com/
+   * https://hmaker.github.io/selenium-detector/
+   * https://kaliiiiiiiiii.github.io/brotector/
+   */
+import cfCheck from "@/utils/cfCheck";
 import { NextResponse } from "next/server";
 
 export const maxDuration = 60; // This function can run for a maximum of 60 seconds (update by 2024-05-10)
 export const dynamic = "force-dynamic";
+const chromium = require("@sparticuz/chromium-min");
+const puppeteer = require("puppeteer-core");
 const fs = require('fs');
 const path = require('path');
 const localExecutablePath =
   process.platform === "win32"
-    ? "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+    ? "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
     : process.platform === "linux"
       ? "/usr/bin/google-chrome"
       : "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
@@ -15,6 +30,7 @@ const remoteExecutablePath =
 
 const isDev = process.env.NODE_ENV === "development";
 let userAgent = "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Mobile Safari/537.36";
+
 
 export async function GET(request) {
   const url = new URL(request.url);
@@ -27,21 +43,20 @@ export async function GET(request) {
   }
   let browser = null;
   try {
-    const chromium = require("@sparticuz/chromium-min");
-    const puppeteer = require("puppeteer-core");
 
     browser = await puppeteer.launch({
       ignoreDefaultArgs: ["--enable-automation"],
-      args: isDev ? [] : [...chromium.args, "--disable-blink-features=AutomationControlled"],
+      args: isDev ? ["--disable-blink-features=AutomationControlled", "--disable-features=site-per-process", "-disable-site-isolation-trials"] : [...chromium.args, "--disable-blink-features=AutomationControlled"],
       defaultViewport: { width: 1920, height: 1080 },
       executablePath: isDev
         ? localExecutablePath
         : await chromium.executablePath(remoteExecutablePath),
-      headless: "new",
+      headless: isDev ? false : "new",
+      debuggingPort: 9222
     });
     browser.on("targetcreated", async (target) => {
-      const _page = await target.page();
-      try {
+      if (target.type() == "page") {
+        const _page = await target.page();
         await _page.setUserAgent(userAgent);
         await _page.setViewport({
           width: 1920,
@@ -49,10 +64,9 @@ export async function GET(request) {
         });
         const preloadFile = fs.readFileSync(path.join(process.cwd(), '/src/utils/preload.js'), 'utf8');
         await _page.evaluateOnNewDocument(preloadFile);
-      } catch (err) {
-        // console.log(err.message);
       }
     });
+
 
     const pages = await browser.pages();
     const page = pages[0];
@@ -63,12 +77,10 @@ export async function GET(request) {
     });
     const preloadFile = fs.readFileSync(path.join(process.cwd(), '/src/utils/preload.js'), 'utf8');
     await page.evaluateOnNewDocument(preloadFile);
-    await page.goto("https://nopecha.com/demo/cloudflare", {
+    await page.goto(urlStr, {
       waitUntil: "networkidle2",
     });
-    await page.waitForSelector('.link_row', {
-      timeout: 60000
-    });
+    await cfCheck(page);
     console.log("page title", await page.title());
     const blob = await page.screenshot({ type: "png" });
 
@@ -76,6 +88,7 @@ export async function GET(request) {
 
     headers.set("Content-Type", "image/png");
     headers.set("Content-Length", blob.length.toString());
+
 
     // or just use new Response ❗️
     return new NextResponse(blob, { status: 200, statusText: "OK", headers });
