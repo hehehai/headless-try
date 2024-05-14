@@ -92,7 +92,7 @@ export default function Home() {
                   <span className="spark mask-gradient animate-flip before:animate-rotate absolute inset-0 h-[100%] w-[100%] overflow-hidden rounded-xl [mask:linear-gradient(white,_transparent_50%)] before:absolute before:aspect-square before:w-[200%] before:rotate-[-90deg] before:bg-[conic-gradient(from_0deg,transparent_0_340deg,white_360deg)] before:content-[''] before:[inset:0_auto_auto_50%] before:[translate:-50%_-15%]" />
                 </span>
                 <span className="backdrop absolute inset-px rounded-[11px] bg-neutral-950 transition-colors duration-200 group-hover:bg-neutral-900" />
-                <span className="z-10 text-neutral-300 text-lg">
+                <span className="z-10 text-neutral-300 text-lg flex items-center space-x-2">
                   {loading && (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -112,7 +112,7 @@ export default function Home() {
           </div>
         </form>
         {imgUrl && (
-          <div className="border border-gray-100 mt-4 max-w-4xl">
+          <div className="border border-gray-100/10 mt-4 max-w-4xl">
             <img src={imgUrl} alt="screenshot" />
           </div>
         )}

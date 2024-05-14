@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<div align="center">
+
+<h1>Deploy puppeteer headless api in vercel</h1>
+<br/>
+
+![image](https://github.com/hehehai/h-blog/assets/12692552/712824de-8b97-44f3-a402-bd213def7c63)
+
+</div>
 
 ## Getting Started
 
 First, run the development server:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Features
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Support webpage screenshots
+- Support cloudflare [nopecha](https://nopecha.com/demo)
 
-## Learn More
+![image](https://github.com/hehehai/h-blog/assets/12692552/bd4cc26c-2bd4-476f-a7ab-d2b5e3d0ae74)
+![image](https://github.com/hehehai/h-blog/assets/12692552/02a65b4a-2f9b-421a-ba26-0f790b0951be)
 
-To learn more about Next.js, take a look at the following resources:
+## Refs
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [在 Vercel 部署无头浏览器实现网页截图](https://www.hehehai.cn/posts/vercel-deploy-headless)
