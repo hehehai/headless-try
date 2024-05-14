@@ -2,7 +2,12 @@ import { NextResponse } from "next/server";
 import fs from "node:fs";
 import path from "node:path";
 import cfCheck from "@/utils/cfCheck";
-import { localExecutablePath, isDev, userAgent } from "@/utils/utils";
+import {
+  localExecutablePath,
+  isDev,
+  userAgent,
+  remoteExecutablePath,
+} from "@/utils/utils";
 
 export const maxDuration = 60; // This function can run for a maximum of 60 seconds (update by 2024-05-10)
 export const dynamic = "force-dynamic";
